@@ -1,4 +1,4 @@
-import episodes from "./episodes.json"
+import episodes from "./episodes.json";
 import EpisodeList from "./components/EpisodeList";
 
 function App(): JSX.Element {

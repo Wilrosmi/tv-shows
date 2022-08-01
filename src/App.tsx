@@ -1,7 +1,8 @@
-import { greet } from "./utils/greet";
+import episodes from "./episodes.json"
+import EpisodeList from "./components/EpisodeList";
 
 function App(): JSX.Element {
-  return <h1>{greet("World")}</h1>;
+  return <EpisodeList episodes={episodes} />;
 }
 
 export default App;

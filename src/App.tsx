@@ -3,6 +3,7 @@ import SearchBar from "./components/SearchBar";
 import { useState, useEffect } from "react";
 import searchFilter from "./utils/searchFilter";
 import { IEpisode } from "./utils/types";
+import shows from "./shows.json"
 
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,8 +21,11 @@ function App(): JSX.Element {
   }, []);
   const filteredEpList = searchFilter(searchTerm, episodes);
 
+  const showsDropdown = shows.map((show) => <option key={show.id}>{show.name}</option>)
+
   return (
     <div>
+      <select>{showsDropdown}</select> <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <p>There are {filteredEpList.length} matches.</p>
       <EpisodeList episodes={filteredEpList} />

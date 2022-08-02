@@ -1,10 +1,10 @@
 import nameSeasonNumbers from "./nameSeasonNumbers";
 
-test("Does nameSeasonNumbers return correct format for numbers over 10", () => {
+test("Correct format for numbers over 10", () => {
   expect(nameSeasonNumbers(16, 10)).toBe("S16E10");
 });
 
-test("Does nameSeasonNumbers return correct format for numbers over 10", () => {
+test("Correct format for numbers less 10", () => {
   expect(nameSeasonNumbers(8, 4)).toBe("S08E04");
 });
 

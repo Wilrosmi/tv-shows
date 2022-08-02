@@ -1,5 +1,5 @@
 import { IEpisode } from "../utils/types";
-import nameSeasonNumbers from "../utils/nameSeasonNumbers"
+import nameSeasonNumbers from "../utils/nameSeasonNumbers";
 
 interface Prop {
   episode: IEpisode;

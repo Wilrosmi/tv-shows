@@ -18,8 +18,22 @@ define cleanSummary
 
 */
 
-function cleanSummary(summary: string): string {
-  return "hello";
-}
+export default function cleanSummary(summary: string): string {
+  let indexStart = 0;
+  let indexEnd = summary.length;
 
-export default cleanSummary;
+  for (let i = 0; i < summary.length; i++) {
+    if (summary[i] === ">" && summary[i + 1] !== "<") {
+      indexStart = i + 1;
+      break;
+    }
+  }
+  for (let i = summary.length - 1; i >= 0; i--) {
+    if (summary[i] === "<" && summary[i - 1] !== ">") {
+      indexEnd = i;
+      break;
+    }
+  }
+
+  return summary.slice(indexStart, indexEnd);
+}

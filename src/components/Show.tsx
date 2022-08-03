@@ -1,4 +1,5 @@
 import { IShow } from "../utils/types";
+import cleanSummary from "../utils/cleanSummary";
 
 interface Prop {
   show: IShow;
@@ -15,15 +16,16 @@ export default function Show({ show }: Prop): JSX.Element {
         src={image && image.medium ? image.medium : backupImage}
         alt="Still from show"
       />
-      <p>{rating.average}</p>
-      <p>{runtime}</p>
+      <p>Rating: {rating.average}</p>
+      <p>Runtime: {runtime}</p>
+      <p>Genres:</p>
       <ul>
         {genres.map((a, index) => (
           <li key={index}>{a}</li>
         ))}
       </ul>
-      <p>{status}</p>
-      <p>{summary}</p>
+      <p>Status: {status}</p>
+      <p>{cleanSummary(summary)}</p>
     </>
   );
 }

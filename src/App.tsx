@@ -1,10 +1,11 @@
 import EpisodeList from "./components/EpisodeList";
 import SearchBar from "./components/SearchBar";
 import { useState, useEffect } from "react";
-import searchFilter from "./utils/searchFilter";
+import searchEpFilter from "./utils/searchEpFilter";
 import { IEpisode, IShow } from "./utils/types";
 // import shows
 import ShowList from "./components/ShowList";
+import searchShowFilter from "./utils/searchShowFilter";
 
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +20,8 @@ function App(): JSX.Element {
     };
     fetchShows();
   }, []);
-  const filteredEpList = searchFilter(searchTerm, showsEpisodes);
+  const filteredEpList = searchEpFilter(searchTerm, showsEpisodes);
+  const filteredShowList = searchShowFilter(searchTerm, shows);
 
   const handleDropdownClick = (name: string): void => {
     // Find id from json with show name
@@ -48,13 +50,18 @@ function App(): JSX.Element {
       {show.name}
     </option>
   ));
+
+  const onShowPage = showsEpisodes.length === 0;
   return (
     <div>
       <select>{showsDropdown}</select> <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <p>There are {filteredEpList.length} matches.</p>
-      {showsEpisodes.length === 0 ? (
-        <ShowList shows={shows} />
+      <p>
+        There are {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}
+        matches.
+      </p>
+      {onShowPage ? (
+        <ShowList shows={filteredShowList} />
       ) : (
         <EpisodeList episodes={filteredEpList} />
       )}

@@ -1,6 +1,6 @@
 import { IEpisode } from "./types";
 
-export default function searchFilter(
+export default function searchEpFilter(
   searchTerm: string,
   inputEpisodes: IEpisode[]
 ): IEpisode[] {

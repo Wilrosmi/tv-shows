@@ -6,9 +6,16 @@ interface Prop {
 }
 
 export default function ShowList({ shows }: Prop): JSX.Element {
+  const sortedShows = shows.sort((a, b) => {
+    if (a.name > b.name) {
+      return 1;
+    } else {
+      return -1;
+    }
+  })
   return (
     <>
-      {shows.map((x) => (
+      {sortedShows.map((x) => (
         <Show show={x} key={x.id} />
       ))}
     </>

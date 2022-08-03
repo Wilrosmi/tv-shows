@@ -19,6 +19,9 @@ define cleanSummary
 */
 
 export default function cleanSummary(summary: string): string {
+  if (!summary) {
+    return "";
+  }
   let indexStart = 0;
   let indexEnd = summary.length;
 

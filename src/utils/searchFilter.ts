@@ -11,8 +11,8 @@ export default function searchFilter(
 }
 
 function findEpisodes(ep: IEpisode, searchTerm: string): boolean {
-  const epNameLowerCase = ep.name.toLowerCase();
-  const summaryLowerCase = ep.summary.toLowerCase();
+  const epNameLowerCase = ep.name ? ep.name.toLowerCase() : "";
+  const summaryLowerCase = ep.summary ? ep.summary.toLowerCase() : "";
   const searchTermLowerCase = searchTerm.toLowerCase();
   return (
     epNameLowerCase.includes(searchTermLowerCase) ||

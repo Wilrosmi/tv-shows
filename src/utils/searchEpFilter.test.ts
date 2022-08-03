@@ -1,4 +1,4 @@
-import searchFilter from "./searchFilter";
+import searchEpFilter from "./searchEpFilter";
 
 const testEpisodes = [
   {
@@ -178,13 +178,13 @@ const summaryTest = [
 ];
 
 test("empty search term shows all episodes", () => {
-  expect(searchFilter("", testEpisodes)).toStrictEqual(testEpisodes);
+  expect(searchEpFilter("", testEpisodes)).toStrictEqual(testEpisodes);
 });
 
 test("name match", () => {
-  expect(searchFilter("gIf", testEpisodes)).toStrictEqual(nameTest);
+  expect(searchEpFilter("gIf", testEpisodes)).toStrictEqual(nameTest);
 });
 
 test("summary match", () => {
-  expect(searchFilter("progress", testEpisodes)).toStrictEqual(summaryTest);
+  expect(searchEpFilter("progress", testEpisodes)).toStrictEqual(summaryTest);
 });

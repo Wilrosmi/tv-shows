@@ -4,9 +4,7 @@ export default function searchShowFilter(
   searchTerm: string,
   inputShows: IShow[]
 ): IShow[] {
-  const outputShows = inputShows.filter((show) =>
-    findShows(show, searchTerm)
-  );
+  const outputShows = inputShows.filter((show) => findShows(show, searchTerm));
   return outputShows;
 }
 

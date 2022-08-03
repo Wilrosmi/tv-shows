@@ -12,7 +12,7 @@ export default function ShowList({ shows }: Prop): JSX.Element {
     } else {
       return -1;
     }
-  })
+  });
   return (
     <>
       {sortedShows.map((x) => (

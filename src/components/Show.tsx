@@ -1,4 +1,5 @@
 import { IShow } from "../utils/types";
+import cleanSummary from "../utils/cleanSummary";
 
 interface Prop {
   show: IShow;
@@ -24,7 +25,7 @@ export default function Show({ show }: Prop): JSX.Element {
         ))}
       </ul>
       <p>Status: {status}</p>
-      <p>{summary}</p>
+      <p>{cleanSummary(summary)}</p>
     </>
   );
 }

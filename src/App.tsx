@@ -56,7 +56,10 @@ function App(): JSX.Element {
     <div>
       <select>{showsDropdown}</select> <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <p>There are {onShowPage ? filteredShowList.length : filteredEpList.length} matches.</p>
+      <p>
+        There are {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}
+        matches.
+      </p>
       {onShowPage ? (
         <ShowList shows={filteredShowList} />
       ) : (

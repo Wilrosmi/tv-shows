@@ -16,3 +16,19 @@ export interface IEpisode {
   summary: string;
   _links: { self: { href: string } };
 }
+
+export interface IShow {
+  id: number;
+  name: string;
+  genres: string[];
+  rating: {
+    average: number;
+  };
+  runtime: number;
+  status: string;
+  image: {
+    medium: string;
+    original: string;
+  };
+  summary: string;
+}

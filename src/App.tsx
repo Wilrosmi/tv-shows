@@ -1,24 +1,24 @@
 import EpisodeList from "./components/EpisodeList";
 import SearchBar from "./components/SearchBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import searchFilter from "./utils/searchFilter";
-import { IEpisode } from "./utils/types";
-import shows from "./shows.json";
+import { IEpisode, IShow } from "./utils/types";
+// import shows
+import ShowList from "./components/ShowList";
 
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
   const [showsEpisodes, setShowsEpisodes] = useState<IEpisode[]>([]);
+  const [shows, setShows] = useState<IShow[]>([]);
 
-  /*  useEffect(() => {
-    const fetchEpisodes = async () => {
-      const response = await fetch(
-        "https://api.tvmaze.com/shows/82/episodes"
-      );
-      const jsonBody: IEpisode[] = await response.json();
-      setEpisodes(jsonBody)
-    }
-    fetchEpisodes();
-  }, []); */
+  useEffect(() => {
+    const fetchShows = async () => {
+      const response = await fetch("https://api.tvmaze.com/shows?page=0");
+      const jsonBody: IShow[] = await response.json();
+      setShows(jsonBody);
+    };
+    fetchShows();
+  }, []);
   const filteredEpList = searchFilter(searchTerm, showsEpisodes);
 
   const handleDropdownClick = (name: string): void => {
@@ -48,13 +48,16 @@ function App(): JSX.Element {
       {show.name}
     </option>
   ));
-
   return (
     <div>
       <select>{showsDropdown}</select> <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <p>There are {filteredEpList.length} matches.</p>
-      <EpisodeList episodes={filteredEpList} />
+      {showsEpisodes.length === 0 ? (
+        <ShowList shows={shows} />
+      ) : (
+        <EpisodeList episodes={filteredEpList} />
+      )}
       <p>
         Credit to{" "}
         <a

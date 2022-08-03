@@ -48,12 +48,14 @@ function App(): JSX.Element {
       {show.name}
     </option>
   ));
+
+  const onShowPage = showsEpisodes.length === 0;
   return (
     <div>
       <select>{showsDropdown}</select> <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <p>There are {filteredEpList.length} matches.</p>
-      {showsEpisodes.length === 0 ? (
+      <p>There are {onShowPage ? shows.length : filteredEpList.length} matches.</p>
+      {onShowPage ? (
         <ShowList shows={shows} />
       ) : (
         <EpisodeList episodes={filteredEpList} />

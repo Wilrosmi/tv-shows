@@ -1,16 +1,19 @@
-import { IShow } from "../utils/types";
+import { IShow, IEpisode } from "../utils/types";
 import cleanSummary from "../utils/cleanSummary";
+import { fetchShowsEpisodes} from "../App"
 
 interface Prop {
   show: IShow;
+  shows : IShow[];
+  setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>
 }
 
-export default function Show({ show }: Prop): JSX.Element {
+export default function Show({ show, shows, setShowsEpisodes }: Prop): JSX.Element {
   const { name, image, rating, runtime, genres, status, summary } = show;
   const backupImage =
     "https://cdn1.vectorstock.com/i/thumb-large/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg";
   return (
-    <>
+    <div onClick={() => handleShowTitleClick(name, shows, setShowsEpisodes)}>
       <h3>{name}</h3>
       <img
         src={image && image.medium ? image.medium : backupImage}
@@ -26,6 +29,14 @@ export default function Show({ show }: Prop): JSX.Element {
       </ul>
       <p>Status: {status}</p>
       <p>{cleanSummary(summary)}</p>
-    </>
+    </div>
   );
+}
+
+function handleShowTitleClick(name : string, shows : IShow[], setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>): void {
+  for (const show of shows) {
+    if (show.name === name) {
+      fetchShowsEpisodes(show.id, setShowsEpisodes);
+    }
+  }
 }

@@ -7,6 +7,12 @@ import ShowList from "./components/ShowList";
 import searchShowFilter from "./utils/searchShowFilter";
 import sortShows from "./utils/sortShows";
 
+export async function fetchShowsEpisodes(id: number, setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>): Promise<void> {
+  const response = await fetch(`https://api.tvmaze.com/shows/${id}/episodes`);
+  const jsonBody: IEpisode[] = await response.json();
+  setShowsEpisodes(jsonBody);
+}
+
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
   const [showsEpisodes, setShowsEpisodes] = useState<IEpisode[]>([]);
@@ -39,7 +45,7 @@ function App(): JSX.Element {
     for (const show of shows) {
       if (show.name === name) {
         targetShowId = show.id;
-        fetchShowsEpisodes(targetShowId);
+        fetchShowsEpisodes(targetShowId, setShowsEpisodes);
       }
     }
     if (isNaN(targetShowId)) {
@@ -47,11 +53,7 @@ function App(): JSX.Element {
     }
   };
 
-  const fetchShowsEpisodes = async (id: number): Promise<void> => {
-    const response = await fetch(`https://api.tvmaze.com/shows/${id}/episodes`);
-    const jsonBody: IEpisode[] = await response.json();
-    setShowsEpisodes(jsonBody);
-  };
+  
 
   const showsDropdown = sortShows(shows).map((show) => (
     <option key={show.id}>
@@ -73,7 +75,7 @@ function App(): JSX.Element {
         matches.
       </p>
       {onShowPage ? (
-        <ShowList shows={filteredShowList} />
+        <ShowList shows={filteredShowList} setShowsEpisodes={setShowsEpisodes}/>
       ) : (
         <EpisodeList episodes={filteredEpList} />
       )}

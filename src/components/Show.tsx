@@ -17,7 +17,7 @@ export default function Show({ show }: Prop): JSX.Element {
         alt="Still from show"
       />
       <p>Rating: {rating.average}</p>
-      <p>Runtime: {runtime}</p>
+      <p>Runtime: {runtime} minute{runtime > 1 ? 's' : ''}</p>
       <p>Genres:</p>
       <ul>
         {genres.map((a, index) => (

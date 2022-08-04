@@ -3,9 +3,9 @@ import SearchBar from "./components/SearchBar";
 import { useState, useEffect } from "react";
 import searchEpFilter from "./utils/searchEpFilter";
 import { IEpisode, IShow } from "./utils/types";
-// import shows
 import ShowList from "./components/ShowList";
 import searchShowFilter from "./utils/searchShowFilter";
+import sortShows from "./utils/sortShows";
 
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,18 +23,26 @@ function App(): JSX.Element {
   const filteredEpList = searchEpFilter(searchTerm, showsEpisodes);
   const filteredShowList = searchShowFilter(searchTerm, shows);
 
-  const handleDropdownClick = (name: string): void => {
+  const handleDropdownClick = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     // Find id from json with show name
     // Fetch episodes for that show from api using id
     // setShowsEpisodes with api response
-    let id = NaN;
+    setSearchTerm("")
+    const dropdownOptionId = e.target.selectedIndex;
+    const name = e.target[dropdownOptionId].innerText;
+    let targetShowId = NaN;
+    if (dropdownOptionId === 0){
+      setShowsEpisodes([])
+      return
+    }
+
     for (const show of shows) {
       if (show.name === name) {
-        id = show.id;
-        fetchShowsEpisodes(id);
+        targetShowId = show.id;
+        fetchShowsEpisodes(targetShowId);
       }
     }
-    if (isNaN(id)) {
+    if (isNaN(targetShowId)) {
       window.alert("It doesn't work"); //Change this
     }
   };
@@ -45,8 +53,8 @@ function App(): JSX.Element {
     setShowsEpisodes(jsonBody);
   };
 
-  const showsDropdown = shows.map((show) => (
-    <option key={show.id} onClick={() => handleDropdownClick(show.name)}>
+  const showsDropdown = sortShows(shows).map((show) => (
+    <option key={show.id}>
       {show.name}
     </option>
   ));
@@ -54,7 +62,11 @@ function App(): JSX.Element {
   const onShowPage = showsEpisodes.length === 0;
   return (
     <div>
-      <select>{showsDropdown}</select> <br />
+      <select onChange={(e) => handleDropdownClick(e)}>
+        <option>Homepage</option>
+        {showsDropdown}
+        </select> 
+        <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <p>
         There are {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}

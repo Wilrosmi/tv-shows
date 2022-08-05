@@ -8,17 +8,22 @@ import searchShowFilter from "./utils/searchShowFilter";
 import sortShows from "./utils/sortShows";
 
 interface fetchShowsEpisodesProps {
-  id : number;
-  name : string;
-  setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>;
-  setDropdownValue : React.Dispatch<React.SetStateAction<string>>
+  id: number;
+  name: string;
+  setShowsEpisodes: React.Dispatch<React.SetStateAction<IEpisode[]>>;
+  setDropdownValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export async function fetchShowsEpisodes({id , name, setShowsEpisodes, setDropdownValue} : fetchShowsEpisodesProps ): Promise<void> {
+export async function fetchShowsEpisodes({
+  id,
+  name,
+  setShowsEpisodes,
+  setDropdownValue,
+}: fetchShowsEpisodesProps): Promise<void> {
   const response = await fetch(`https://api.tvmaze.com/shows/${id}/episodes`);
   const jsonBody: IEpisode[] = await response.json();
   setShowsEpisodes(jsonBody);
-  setDropdownValue(name)
+  setDropdownValue(name);
 }
 
 function App(): JSX.Element {
@@ -38,24 +43,31 @@ function App(): JSX.Element {
   const filteredEpList = searchEpFilter(searchTerm, showsEpisodes);
   const filteredShowList = searchShowFilter(searchTerm, shows);
 
-  const handleDropdownClick = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+  const handleDropdownClick = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     // Find id from json with show name
     // Fetch episodes for that show from api using id
     // setShowsEpisodes with api response
-    setSearchTerm("")
+    setSearchTerm("");
     const dropdownOptionId = e.target.selectedIndex;
     const name = e.target[dropdownOptionId].innerText;
     let targetShowId = NaN;
-    if (dropdownOptionId === 0){
-      setShowsEpisodes([])
-      setDropdownValue(name)
-      return
+    if (dropdownOptionId === 0) {
+      setShowsEpisodes([]);
+      setDropdownValue(name);
+      return;
     }
 
     for (const show of shows) {
       if (show.name === name) {
         targetShowId = show.id;
-        fetchShowsEpisodes({id : targetShowId, name, setShowsEpisodes, setDropdownValue});
+        fetchShowsEpisodes({
+          id: targetShowId,
+          name,
+          setShowsEpisodes,
+          setDropdownValue,
+        });
       }
     }
     if (isNaN(targetShowId)) {
@@ -63,12 +75,8 @@ function App(): JSX.Element {
     }
   };
 
-  
-
   const showsDropdown = sortShows(shows).map((show) => (
-    <option key={show.id}>
-      {show.name}
-    </option>
+    <option key={show.id}>{show.name}</option>
   ));
 
   const onShowPage = showsEpisodes.length === 0;
@@ -77,15 +85,19 @@ function App(): JSX.Element {
       <select onChange={(e) => handleDropdownClick(e)} value={dropdownValue}>
         <option>Homepage</option>
         {showsDropdown}
-        </select> 
-        <br />
+      </select>
+      <br />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <p>
         There are {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}
         matches.
       </p>
       {onShowPage ? (
-        <ShowList shows={filteredShowList} setShowsEpisodes={setShowsEpisodes} setDropdownValue={setDropdownValue}/>
+        <ShowList
+          shows={filteredShowList}
+          setShowsEpisodes={setShowsEpisodes}
+          setDropdownValue={setDropdownValue}
+        />
       ) : (
         <EpisodeList episodes={filteredEpList} />
       )}

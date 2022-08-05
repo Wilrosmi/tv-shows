@@ -11,7 +11,9 @@ export default function searchShowFilter(
 function findShows(show: IShow, searchTerm: string): boolean {
   const showNameLowerCase = show.name ? show.name.toLowerCase() : "";
   const summaryLowerCase = show.summary ? show.summary.toLowerCase() : "";
-  const genresLowerCase = show.genres ? show.genres.map((genre) => genre.toLowerCase()) : [];
+  const genresLowerCase = show.genres
+    ? show.genres.map((genre) => genre.toLowerCase())
+    : [];
 
   const searchTermLowerCase = searchTerm.toLowerCase();
   return (

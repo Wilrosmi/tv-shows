@@ -1,8 +1,8 @@
 export default function cleanSummary(summary: string): string {
   let tagSwitch: 0 | 1 = 1;
   let outputString = "";
-  if (typeof summary != 'string') {
-    return outputString
+  if (typeof summary != "string") {
+    return outputString;
   }
   for (const char of summary) {
     if (char === "<") {

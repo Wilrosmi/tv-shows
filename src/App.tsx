@@ -7,15 +7,24 @@ import ShowList from "./components/ShowList";
 import searchShowFilter from "./utils/searchShowFilter";
 import sortShows from "./utils/sortShows";
 
-export async function fetchShowsEpisodes(id: number, setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>): Promise<void> {
+interface fetchShowsEpisodesProps {
+  id : number;
+  name : string;
+  setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>;
+  setDropdownValue : React.Dispatch<React.SetStateAction<string>>
+}
+
+export async function fetchShowsEpisodes({id , name, setShowsEpisodes, setDropdownValue} : fetchShowsEpisodesProps ): Promise<void> {
   const response = await fetch(`https://api.tvmaze.com/shows/${id}/episodes`);
   const jsonBody: IEpisode[] = await response.json();
   setShowsEpisodes(jsonBody);
+  setDropdownValue(name)
 }
 
 function App(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState("");
   const [showsEpisodes, setShowsEpisodes] = useState<IEpisode[]>([]);
+  const [dropdownValue, setDropdownValue] = useState("");
   const [shows, setShows] = useState<IShow[]>([]);
 
   useEffect(() => {
@@ -39,13 +48,14 @@ function App(): JSX.Element {
     let targetShowId = NaN;
     if (dropdownOptionId === 0){
       setShowsEpisodes([])
+      setDropdownValue(name)
       return
     }
 
     for (const show of shows) {
       if (show.name === name) {
         targetShowId = show.id;
-        fetchShowsEpisodes(targetShowId, setShowsEpisodes);
+        fetchShowsEpisodes({id : targetShowId, name, setShowsEpisodes, setDropdownValue});
       }
     }
     if (isNaN(targetShowId)) {
@@ -64,7 +74,7 @@ function App(): JSX.Element {
   const onShowPage = showsEpisodes.length === 0;
   return (
     <div>
-      <select onChange={(e) => handleDropdownClick(e)}>
+      <select onChange={(e) => handleDropdownClick(e)} value={dropdownValue}>
         <option>Homepage</option>
         {showsDropdown}
         </select> 
@@ -75,7 +85,7 @@ function App(): JSX.Element {
         matches.
       </p>
       {onShowPage ? (
-        <ShowList shows={filteredShowList} setShowsEpisodes={setShowsEpisodes}/>
+        <ShowList shows={filteredShowList} setShowsEpisodes={setShowsEpisodes} setDropdownValue={setDropdownValue}/>
       ) : (
         <EpisodeList episodes={filteredEpList} />
       )}

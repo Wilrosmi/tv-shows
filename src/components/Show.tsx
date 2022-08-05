@@ -5,15 +5,16 @@ import { fetchShowsEpisodes} from "../App"
 interface Prop {
   show: IShow;
   shows : IShow[];
-  setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>
+  setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>;
+  setDropdownValue : React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Show({ show, shows, setShowsEpisodes }: Prop): JSX.Element {
+export default function Show({ show, shows, setShowsEpisodes, setDropdownValue }: Prop): JSX.Element {
   const { name, image, rating, runtime, genres, status, summary } = show;
   const backupImage =
     "https://cdn1.vectorstock.com/i/thumb-large/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg";
   return (
-    <div onClick={() => handleShowTitleClick(name, shows, setShowsEpisodes)}>
+    <div onClick={() => handleShowTitleClick(name, shows, setShowsEpisodes, setDropdownValue)}>
       <h3>{name}</h3>
       <img
         src={image && image.medium ? image.medium : backupImage}
@@ -33,10 +34,10 @@ export default function Show({ show, shows, setShowsEpisodes }: Prop): JSX.Eleme
   );
 }
 
-function handleShowTitleClick(name : string, shows : IShow[], setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>): void {
+function handleShowTitleClick(name : string, shows : IShow[], setShowsEpisodes : React.Dispatch<React.SetStateAction<IEpisode[]>>, setDropdownValue : React.Dispatch<React.SetStateAction<string>>): void {
   for (const show of shows) {
     if (show.name === name) {
-      fetchShowsEpisodes(show.id, setShowsEpisodes);
+      fetchShowsEpisodes({id : show.id, name, setShowsEpisodes, setDropdownValue});
     }
   }
 }

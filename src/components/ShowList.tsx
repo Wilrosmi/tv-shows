@@ -1,31 +1,30 @@
-import { IShow } from "../utils/types";
+import { IShow, IEpisode } from "../utils/types";
 import Show from "./Show";
+import sortShows from "../utils/sortShows";
 
-interface Prop {
+interface ShowListProp {
   shows: IShow[];
+  setShowsEpisodes: React.Dispatch<React.SetStateAction<IEpisode[]>>;
+  setDropdownValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function ShowList({ shows }: Prop): JSX.Element {
-  const sortedShows = shows.sort((a, b) => {
-    if (a.name > b.name) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
+export default function ShowList({
+  shows,
+  setShowsEpisodes,
+  setDropdownValue,
+}: ShowListProp): JSX.Element {
+  const sortedShows = sortShows(shows);
   return (
     <>
       {sortedShows.map((x) => (
-        <Show show={x} key={x.id} />
+        <Show
+          show={x}
+          key={x.id}
+          shows={shows}
+          setShowsEpisodes={setShowsEpisodes}
+          setDropdownValue={setDropdownValue}
+        />
       ))}
     </>
   );
 }
-
-/*
-fetch in ShowList component
-
-
-
-
-*/

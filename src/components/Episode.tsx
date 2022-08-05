@@ -11,16 +11,17 @@ function Episode({ episode }: Prop): JSX.Element {
   const backupImage =
     "https://cdn1.vectorstock.com/i/thumb-large/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg";
   return (
-    <>
-      <h3>
+    <div className="episode">
+      <h3 className="episodeTitle">
         {name} - {nameSeasonNumbers(season, epNumber)}
       </h3>
       <img
+        className="episodeImage"
         src={image && image.medium ? image.medium : backupImage}
         alt={`Still from ${name}`}
       />
       <p>{cleanSummary(summary)}</p>
-    </>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ export default function SearchBar({
 }: SearchBarProps): JSX.Element {
   return (
     <input
+      id="searchBar"
       type="text"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}

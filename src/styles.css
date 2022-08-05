@@ -1,0 +1,86 @@
+@font-face {
+  src: url("./Fonts/Chivo-Light.ttf");
+  font-family: "chivo";
+}
+
+body {
+  font-family: chivo;
+  background: #f8eef2;
+  color: rgb(22, 23, 39);
+}
+
+header {
+  margin: 15px;
+}
+
+#title,
+#subheading {
+  margin: auto;
+  display: block;
+  text-align: center;
+  color: rgb(63, 59, 59);
+}
+
+#searchBar,
+#dropdown {
+  margin: 15px auto;
+  display: block;
+  width: 350px;
+  padding: 5px 15px;
+}
+
+#dropdown {
+  margin: 15px auto auto auto;
+  width: 300px;
+}
+
+#matchesCounter {
+  text-align: center;
+}
+
+.show,
+.episode {
+  width: 400px;
+  background: #fad2e1;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+.showTitle,
+.episodeTitle {
+  text-align: center;
+  margin: 0px 5px;
+  font-size: 30px;
+  padding: 10px;
+}
+
+.showImage,
+.episodeImage {
+  padding: 10px;
+}
+
+.episodeImage {
+  margin: auto;
+  width: 300px;
+  display: block;
+}
+
+.showDetailsTop {
+  display: flex;
+  flex-direction: row;
+}
+
+#showDetails {
+  width: 300px;
+}
+
+.summary {
+  padding: 10px 10px;
+  text-align: justify;
+}
+
+.componentList {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

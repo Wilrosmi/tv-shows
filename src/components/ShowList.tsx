@@ -15,7 +15,7 @@ export default function ShowList({
 }: ShowListProp): JSX.Element {
   const sortedShows = sortShows(shows);
   return (
-    <>
+    <div className="componentList">
       {sortedShows.map((x) => (
         <Show
           show={x}
@@ -25,6 +25,6 @@ export default function ShowList({
           setDropdownValue={setDropdownValue}
         />
       ))}
-    </>
+    </div>
   );
 }

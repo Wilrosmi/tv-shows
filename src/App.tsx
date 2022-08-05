@@ -81,37 +81,47 @@ function App(): JSX.Element {
 
   const onShowPage = showsEpisodes.length === 0;
   return (
-    <div>
-      <select onChange={(e) => handleDropdownClick(e)} value={dropdownValue}>
-        <option>Homepage</option>
-        {showsDropdown}
-      </select>
-      <br />
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <p>
-        There are {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}
-        matches.
-      </p>
-      {onShowPage ? (
-        <ShowList
-          shows={filteredShowList}
-          setShowsEpisodes={setShowsEpisodes}
-          setDropdownValue={setDropdownValue}
-        />
-      ) : (
-        <EpisodeList episodes={filteredEpList} />
-      )}
-      <p>
-        Credit to{" "}
-        <a
-          rel="noreferrer"
-          href="https://www.tvmaze.com/shows/82/game-of-thrones"
-          target="_blank"
+    <>
+      <header>
+        <h1 id="title">Fantastic TV show picker app!</h1>
+        <h3 id="subheading">By Niamh and Will</h3>
+      </header>
+      <div>
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <select
+          id="dropdown"
+          onChange={(e) => handleDropdownClick(e)}
+          value={dropdownValue}
         >
-          TVMaze
-        </a>
-      </p>
-    </div>
+          <option>Homepage</option>
+          {showsDropdown}
+        </select>
+        <p id="matchesCounter">
+          There are{" "}
+          {onShowPage ? filteredShowList.length : filteredEpList.length}{" "}
+          matches.
+        </p>
+        {onShowPage ? (
+          <ShowList
+            shows={filteredShowList}
+            setShowsEpisodes={setShowsEpisodes}
+            setDropdownValue={setDropdownValue}
+          />
+        ) : (
+          <EpisodeList episodes={filteredEpList} />
+        )}
+        <p>
+          Credit to{" "}
+          <a
+            rel="noreferrer"
+            href="https://www.tvmaze.com/shows/82/game-of-thrones"
+            target="_blank"
+          >
+            TVMaze
+          </a>
+        </p>
+      </div>
+    </>
   );
 }
 
